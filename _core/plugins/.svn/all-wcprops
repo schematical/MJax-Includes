@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins
+END
+MJaxPluginBase.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxPluginBase.class.php
+END
+MJaxJqFancySlideShowPlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxJqFancySlideShowPlugin.class.php
+END
+MJaxNivoSlideShowPlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxNivoSlideShowPlugin.class.php
+END
+MJaxQTipPlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxQTipPlugin.class.php
+END
+MJaxAnimatePlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxAnimatePlugin.class.php
+END
+MJaxAutoCompletePlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxAutoCompletePlugin.class.php
+END
+MJaxScrollToPlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxScrollToPlugin.class.php
+END
+MJaxSelectMenuPlugin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/!svn/ver/260/qcodoIncludes/includes/mlc/MJax/_core/plugins/MJaxSelectMenuPlugin.class.php
+END
