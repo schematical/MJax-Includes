@@ -18,9 +18,10 @@ class MJaxScrollToPlugin extends MJaxPluginBase{
     protected $ctlTarget = null;
     protected $cssTarget = null;
     protected $strTargetSelector = null;
-    public function  __construct($objForm, $mixTarget, $mixProperties= array(), $intDuration = 500) {
+    protected $blnUseFirstChild = false;
+    public function  __construct($objForm, $mixTarget, $mixProperties= array(), $intDuration = 500, $blnUseFirstChild = false) {
         parent::__construct($objForm);
-        $this->objForm->AddHeaderAsset(new MJaxJSHeaderAsset(__VIRTUAL_DIRECTORY__ . __JS_ASSETS__ . '/jquery.scrollTo-min.js'));
+       // $this->objForm->AddHeaderAsset(new MJaxJSHeaderAsset(__VIRTUAL_DIRECTORY__ . __JS_ASSETS__ . '/jquery.scrollTo-min.js'));
         if($mixTarget instanceof MJaxControl){
             $this->ctlTarget = $mixTarget;
             $this->strTargetSelector = '#' .$mixTarget->ControlId;
@@ -34,6 +35,7 @@ class MJaxScrollToPlugin extends MJaxPluginBase{
         }
         $this->mixProperties = $mixProperties;
         $this->intDuration = $intDuration;
+        $this->blnUseFirstChild = $blnUseFirstChild;
 
     }
     /*-----debugging --------
@@ -65,11 +67,14 @@ class MJaxScrollToPlugin extends MJaxPluginBase{
         }else{
             throw new QCallerException("mixProperties needs to be either an array, a string or a MJaxControlStyle");
         }
-        $strRendered = sprintf("$('%s').scrollTo('%s', %s, %s);", 
+        $strFirstChild = ($this->blnUseFirstChild?'[0]':'');
+        $strRendered = sprintf("$('%s')%s.scrollTo('%s');",//, %s, %s);",
             $this->strSelector,
+            $strFirstChild,
             $this->strTargetSelector,
-            $this->intDuration,
-            $strProperties);
+            $strProperties,
+            $this->intDuration
+        );
         $this->blnModified = false;
         if($blnPrint){
             _p($strRendered, false);
@@ -77,6 +82,44 @@ class MJaxScrollToPlugin extends MJaxPluginBase{
             return $strRendered;
         }
     }
+     /////////////////////////
+    // Public Properties: GET
+    /////////////////////////
+    public function __get($strName) {
+        switch ($strName) {
+            case "UseFirstChild": return $this->blnUseFirstChild;
+            default:
+                try {
+                    return parent::__get($strName);
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
+        }
+    }
+
+    /////////////////////////
+    // Public Properties: SET
+    /////////////////////////
+    public function __set($strName, $mixValue) {
+        switch ($strName) {
+            case "UseFirstChild":
+                try {
+                    return ($this->blnUseFirstChild = QType::Cast($mixValue, QType::Boolean));
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
+            default:
+                try {
+                    return parent::__set($strName, $mixValue);
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
+        }
+    }
+
     
 }
 ?>

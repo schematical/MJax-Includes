@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch
+END
+MJaxTouchConfig.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchConfig.class.php
+END
+MJaxTouchControlBase.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchControlBase.php
+END
+MJaxList.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxList.class.php
+END
+_actions.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/_actions.php
+END
+MJaxTouchListItem.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchListItem.class.php
+END
+MJaxTouchPage.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchPage.class.php
+END
+_enum.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/_enum.php
+END
+_events.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/_events.php
+END
+MJaxTouchScreen.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchScreen.class.php
+END
+MJaxTouchControl.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/!svn/ver/262/qcodoIncludes/includes/mlc/MJax/_core/touch/MJaxTouchControl.class.php
+END

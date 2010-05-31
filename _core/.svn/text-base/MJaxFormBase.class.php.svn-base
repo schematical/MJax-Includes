@@ -15,8 +15,11 @@ class MJaxFormBase extends QBaseClass{
     protected $strFormId = null;
     protected $arrAsset = array();
     protected $strCallType = null;
+    protected $strTemplate = null;
     protected $objActiveEvent = null;
     protected $pxyMainWindow = null;
+
+    protected $blnSkipMainWindowRender = false;
     /////////////////////////
     // Public Properties: GET
     /////////////////////////
@@ -26,6 +29,7 @@ class MJaxFormBase extends QBaseClass{
             case "CallType": return $this->strCallType;
             case "ActiveEvent": return $this->objActiveEvent;
             case "MainWindow": return $this->pxyMainWindow;
+            case "SkipMainWindowRender": return $this->blnSkipMainWindowRender;
             default:
                 try {
                     return parent::__get($strName);
@@ -44,6 +48,13 @@ class MJaxFormBase extends QBaseClass{
             case "ActiveEvent":
                 try {
                     return ($this->objActiveEvent = $mixValue);
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
+            case "SkipMainWindowRender":
+                try {
+                    return ($this->blnSkipMainWindowRender = QType::Cast($mixValue, QType::Boolean));
                 } catch (QCallerException $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;
@@ -97,13 +108,13 @@ class MJaxFormBase extends QBaseClass{
              $objClass->strCallType = QCallType::Ajax;
              QApplication::$RequestMode = QRequestMode::Ajax;
              //Create a proxy for the main content panel
-             $objClass->pxyMainWindow = new MJaxControlProxy($objClass, 'mainWindow');   
+             $objClass->pxyMainWindow = new MJaxControlProxy($objClass, 'mainWindow_inner');
              $objClass->Form_Create();
         }else{
             $objClass->strCallType = QCallType::None;
             QApplication::$RequestMode = QRequestMode::Standard;
              //Create a proxy for the main content panel
-            $objClass->pxyMainWindow = new MJaxControlProxy($objClass, 'mainWindow');
+            $objClass->pxyMainWindow = new MJaxControlProxy($objClass, 'mainWindow_inner');
             $objClass->Form_Create();
         }
         if(key_exists(MJaxFormPostData::ACTION, $_POST)){
@@ -115,7 +126,11 @@ class MJaxFormBase extends QBaseClass{
             }
         }
 
-
+        if(is_null($strAlternateHtmlFile)){
+            $objClass->strTemplate = $_SERVER[MLCServer::SCRIPT_FILENAME];
+        }else{
+            $objClass->strTemplate = $strAlternateHtmlFile;
+        }
         
         $objClass->Form_PreRender();
         if($objClass->strCallType == QCallType::Ajax){
@@ -140,7 +155,8 @@ class MJaxFormBase extends QBaseClass{
     protected function Render(){
         $strHeader = $this->EvaluateTemplate(__DOCROOT__ . __PHP_ASSETS__ . '/header.inc.php');
         _p($strHeader, false);
-        require(self::LocateTemplate($_SERVER[MLCServer::SCRIPT_FILENAME]));
+        require(self::LocateTemplate($this->strTemplate));
+
         $strFooter = $this->EvaluateTemplate(__DOCROOT__ . __PHP_ASSETS__ . '/footer.inc.php');
         $strFormState = sprintf('<input type="hidden" name="%s" id="%s" value="%s" />', MJaxFormPostData::MJaxForm__FormState, MJaxFormPostData::MJaxForm__FormState, MJaxForm::Serialize($this));
         _p($strFormState, false);
@@ -174,12 +190,28 @@ class MJaxFormBase extends QBaseClass{
             $blnModified = true;
         }
         if($blnModified){
+            $strControlFull = '';
+
             $strControl = '';
             $strControl .= $this->RenderHeaderAssets(false);
-            $strControl .= $this->EvaluateTemplate(self::LocateTemplate($_SERVER[MLCServer::SCRIPT_FILENAME]));
-            $strControl .= sprintf('<input type="hidden" name="%s" id="%s" value="%s" />', MJaxFormPostData::MJaxForm__FormState, MJaxFormPostData::MJaxForm__FormState, MJaxForm::Serialize($this));
-            $strControl = QString::XmlEscape(trim($strControl));
-            $strControlFull = sprintf("<control id='mainWindow'>%s</control>",$strControl);
+            $strControl .= $this->EvaluateTemplate(self::LocateTemplate($this->strTemplate));
+            
+            foreach($this->arrControls as $objControl){
+                if($objControl->Modified){
+                    $strControlFull .= $objControl->Render(false, true) . "\n";
+                }
+            }
+
+            error_log($this->blnSkipMainWindowRender?'SKipping':"Not skipping");
+            if($this->blnSkipMainWindowRender){
+                $strControlFull .= sprintf("<control id='%s'>%s</control>", MJaxFormPostData::MJaxForm__FormState, MJaxForm::Serialize($this));
+                $this->blnSkipMainWindowRender = false;
+            }else{
+                $strControl .= sprintf('<input type="hidden" name="%s" id="%s" value="%s" />', MJaxFormPostData::MJaxForm__FormState, MJaxFormPostData::MJaxForm__FormState, MJaxForm::Serialize($this));
+                $strControl = QString::XmlEscape(trim($strControl));
+                $strControlFull .= sprintf("<control id='mainWindow'>%s</control>",$strControl);
+            }
+           
             
         }else{
             $strControlFull = '';
@@ -212,7 +244,7 @@ class MJaxFormBase extends QBaseClass{
         $strRendered = '';
         
         foreach($this->arrControls as $objControl){
-            $strRendered .= $objControl->RenderJSCalls($blnAjaxFormating);
+            $strRendered .= $objControl->RenderJSCalls($blnAjaxFormating) ."\n\n";
         }
         if($blnAjaxFormating){
             $strRendered = QString::XmlEscape(trim($strRendered));
@@ -248,8 +280,14 @@ class MJaxFormBase extends QBaseClass{
         }
         $this->arrControls[$strControlId] = $objControl;
     }
-    public function AddHeaderAsset($objAsset){
-        $this->arrAsset[] = $objAsset;
+    public function AddHeaderAsset($objNewAsset){
+        foreach($this->arrAsset as $objAsset){
+            if($objAsset->Src == $objNewAsset->Src){
+                //Were already including this so return
+                return;
+            }
+        }
+        $this->arrAsset[] = $objNewAsset;
     }
     public function RenderHeaderAssets($blnPrint = true){
         

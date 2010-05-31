@@ -9,6 +9,8 @@ class MLCSiteForm extends MJaxForm{
     protected $pnlDesignersIcon = null;
     protected $pnlTwitterIcon = null;
     protected $pnlLabIcon = null;
+    
+    protected $pnlMLCToolBar = null;
 
     public function Form_Create() {
         $cssClass = MJaxApplication::CssClass('icon');
@@ -36,13 +38,20 @@ class MLCSiteForm extends MJaxForm{
 
         $this->pnlTwitterIcon = new MJaxPanel($this, 'twitterIcon');
         $this->pnlTwitterIcon->AddCssClass($cssClass);
-        $this->pnlTwitterIcon->Attr('page', 'twitter');
+        $this->pnlTwitterIcon->Attr('href', 'http://www.twitter.com/3villabs');
         $this->pnlTwitterIcon->Modified = false;
 
         $this->pnlLabIcon = new MJaxPanel($this, 'labIcon');
         $this->pnlLabIcon->AddCssClass($cssClass);
         $this->pnlLabIcon->Attr('page', 'lab');
         $this->pnlLabIcon->Modified = false;
+
+        $this->pnlMLCToolBar = new MJaxPanel($this, 'MLCToolBar');
+        $this->pnlMLCToolBar->Text = "Copyright Matt Lea 2010";
+        $this->pnlMLCToolBar->Modified = false;
+    }
+    public function SetToolBarText($strText){
+        $this->pnlMLCToolBar->Text = $strText;
     }
 }
 ?>

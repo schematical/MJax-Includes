@@ -49,5 +49,6 @@
     QApplicationBase::$ClassFile['PBBCaseStudyPanel'] = __MJAX__ . '/PBBCaseStudyPanel.class.php';
     QApplicationBase::$ClassFile['DRCaseStudyPanel'] = __MJAX__ . '/DRCaseStudyPanel.class.php';
     QApplicationBase::$ClassFile['MJAXCaseStudyPanel'] = __MJAX__ . '/MJAXCaseStudyPanel.class.php';
+    QApplicationBase::$ClassFile['StadjCaseStudyPanel'] = __MJAX__ . '/StadjCaseStudyPanel.class.php';
     require_once(__MJAX__ .  "/_enum.php");
 ?>

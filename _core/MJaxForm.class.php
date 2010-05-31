@@ -4,7 +4,10 @@
  */
 class MJaxForm extends MJaxFormBase{
 
-
+    /*public function  __construct() {
+        $objCssClass = MJaxApplication::CssClass('MJaxLink');
+        $objCssClass->AddAction(new MJaxClickEvent(), new MJaxJavascriptAction());
+    }*/
     
 }
 ?>

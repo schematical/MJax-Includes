@@ -4,6 +4,11 @@
  */
 class MJaxLinkButton extends MJaxControl{
     protected $strHref = '#';
+    public function __construct($objParentControl,$strControlId = null) {
+        parent::__construct($objParentControl,$strControlId);
+
+        $this->AddCssClass(MJaxApplication::CssClass('MJaxLinkButton'));
+    }
     public function Render($blnPrint = true){
         //Render Actions first if applicable
         $strRendered = parent::Render();
