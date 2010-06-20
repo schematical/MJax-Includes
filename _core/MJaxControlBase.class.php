@@ -33,6 +33,7 @@ class MJaxControlBase extends QBaseClass{
         }
         $this->objForm->RegisterControl($this);
         $this->objStyle = new MJaxControlStyle();
+        //$this->Create_Controls();
     }
 
     public function SetForm($objForm) {
@@ -87,7 +88,7 @@ class MJaxControlBase extends QBaseClass{
         $strDocumentReady = '';
         
         foreach($this->arrEvents as $arrSubEvents){
-            error_log($this->strControlId . " Count: " . count($arrSubEvents));
+            
             foreach($arrSubEvents as $objEvent){
                 $strDocumentReady .= $objEvent->Render();
             }

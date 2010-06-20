@@ -20,6 +20,7 @@ class MLCCaseStudyPanelBase extends MJaxPanel{
             $this->btnNext = new MJaxLinkButton($this, $this->strControlId . '_btnNext');
             $objPlugin = new MJaxScrollToPlugin($this->objForm, '#' . $this->objForm->GetCaseStudyIndex($this->strControlId, + 1), array(), 1200);
             $objPlugin->SetTargetControl($this->objForm->MainWindow);
+            $objPlugin->UseFirstChild = true;
             $this->btnNext->AddAction(new MJaxClickEvent(), new MJaxPluginAction($objPlugin));
             $this->btnNext->Text = "next/";
             $this->btnNext->ActionParameter = $this->strControlId;
@@ -28,6 +29,7 @@ class MLCCaseStudyPanelBase extends MJaxPanel{
             $this->btnPrev = new MJaxLinkButton($this, $this->strControlId . '_btnPrev');
             $objPlugin = new MJaxScrollToPlugin($this->objForm, '#' .$this->objForm->GetCaseStudyIndex($this->strControlId, - 1), array(), 1200);
             $objPlugin->SetTargetControl($this->objForm->MainWindow);
+            $objPlugin->UseFirstChild = true;
             $this->btnPrev->AddAction(new MJaxClickEvent(), new MJaxPluginAction($objPlugin));
             $this->btnPrev->Text = "previous/";
             $this->btnPrev->ActionParameter = $this->strControlId;

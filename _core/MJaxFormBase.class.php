@@ -10,6 +10,7 @@ class MJaxFormBase extends QBaseClass{
     public static $FormStateHandler = 'QFormStateHandler';
 
     //------Instance------
+    protected $strTitle = null;
     protected $arrControls = array();
     protected $intNextControlId = 1;
     protected $strFormId = null;
@@ -25,6 +26,7 @@ class MJaxFormBase extends QBaseClass{
     /////////////////////////
     public function __get($strName) {
         switch ($strName) {
+            case "Title": return $this->strTitle;
             case "FormId": return $this->strFormId;
             case "CallType": return $this->strCallType;
             case "ActiveEvent": return $this->objActiveEvent;
@@ -45,6 +47,13 @@ class MJaxFormBase extends QBaseClass{
     /////////////////////////
     public function __set($strName, $mixValue) {
         switch ($strName) {
+          case "Title":
+                try {
+                    return ($this->strTitle = QType::Cast($mixValue, QType::String));
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
             case "ActiveEvent":
                 try {
                     return ($this->objActiveEvent = $mixValue);
@@ -408,6 +417,7 @@ class MJaxFormBase extends QBaseClass{
                 require($strTemplate);
                 $strTemplateEvaluated = ob_get_contents();
             ob_end_clean();
+            
 
             // Restore the output buffer and return evaluated template
             print($strAlreadyRendered);

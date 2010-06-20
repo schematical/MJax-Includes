@@ -13,6 +13,17 @@ class MLCSiteForm extends MJaxForm{
     protected $pnlMLCToolBar = null;
 
     public function Form_Create() {
+        //Respons Header fun
+        header("X-FunStuff:Wow you must really be dedicatied to check out my headers-I wonder what is happening on port 5033?");
+        header("X-Ninjas:Dude ninjas rule... don't lie!");
+        header("X-OtherStuff:You know zappos.com hides stuff in their headers too!");
+
+        //SEO and weird mistic crap
+        $this->strTitle = "Matt Lea Consulting - PHP Framework lover and jQuery Ninja";
+        $this->AddHeaderAsset(new MJaxMetaHeaderAsset(MJaxMetaHeaderAsset::description, 'Matt Lea Consulting - PHP Framework lover and jQuery Ninja: I love the art involved in creating a good framework, and the science'));
+        $this->AddHeaderAsset(new MJaxMetaHeaderAsset(MJaxMetaHeaderAsset::keywords, 'Matt Lea, PHP, QCodo, jQuery, MJax, MJaxTouch, jQTouch'));
+
+
         $cssClass = MJaxApplication::CssClass('icon');
         $cssClass->AddAction(new MJaxClickEvent(), new MJaxJavascriptAction('MLCSite.IconClick'));
         

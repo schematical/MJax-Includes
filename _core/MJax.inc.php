@@ -39,6 +39,9 @@
     require_once(__MJAX_CORE__ .  "/_enum.php");
     require_once(__MJAX_CORE__ .  "/_actions.php");
     require_once(__MJAX_CORE__ .  "/_events.php");
+    /*--------MJAX TOUCH FILES-----------*/
+
+    require_once(__MJAX_CORE__ .  "/touch/MJaxTouch.inc.php");
     /*--------NON CORE FILES-------------*/
 
     QApplicationBase::$ClassFile['MLCSiteForm'] = __MJAX__ . '/MLCSiteForm.class.php';

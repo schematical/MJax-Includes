@@ -8,15 +8,21 @@ class MJaxTouchConfig extends QBaseClass{
     const addGlossToIcon = 'addGlossToIcon';
     const startupScreen = 'startupScreen';
     const statusBar = 'statusBar';
+    const touchSelector = 'touchSelector';
+    const slideSelector = 'slideSelector';
 
 
 
     protected $arrConfig = array();
-    
+    public function __construct() {
+        //These need to be set in order for MJaxTouch to function correctly
+        $this->touchSelector = '.touch';
+        $this->slideSelector = '';;
+    }
     public function Render($blnPrint = true){
-        $strRendered = 'var jQT = new $.jQTouch(\n';
+        $strRendered = "var jQT = new $.jQTouch(";
         $strRendered .= MJaxApplication::ConvertArrayToJason($this->arrConfig);
-        $strRendered .= ');\n';
+        $strRendered .= ");\n";
         if($blnPrint){
             _p($strRendered);
         }else{

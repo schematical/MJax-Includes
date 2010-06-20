@@ -3,17 +3,18 @@
  * This is a simple button class for use with the mjax framework
  */
 class MJaxLinkButton extends MJaxControl{
-    protected $strHref = '#';
+    
     public function __construct($objParentControl,$strControlId = null) {
         parent::__construct($objParentControl,$strControlId);
 
         $this->AddCssClass(MJaxApplication::CssClass('MJaxLinkButton'));
+        $this->Attr('href', '#');
     }
     public function Render($blnPrint = true){
         //Render Actions first if applicable
         $strRendered = parent::Render();
         
-        $strRendered .= sprintf("<a id='%s' name='%s' href='%s' %s>%s</a>", $this->strControlId, $this->strControlId, $this->strHref, $this->GetAttrString(), $this->strText);
+        $strRendered .= sprintf("<a id='%s' name='%s' %s>%s</a>", $this->strControlId, $this->strControlId,  $this->GetAttrString(), $this->strText);
         if($blnPrint){
             _p($strRendered, false);
         }else{
@@ -25,7 +26,7 @@ class MJaxLinkButton extends MJaxControl{
     /////////////////////////
     public function __get($strName) {
         switch ($strName) {
-            case "Href": return $this->strHref;
+            case "Href": return $this->Attr('href');
             default:
                 try {
                     return parent::__get($strName);
@@ -43,7 +44,7 @@ class MJaxLinkButton extends MJaxControl{
         switch ($strName) {
             case "Href":
                 try {
-                    return ($this->strHref = QType::Cast($mixValue, QType::String));
+                    return ($this->Attr('href', QType::Cast($mixValue, QType::String)));
                 } catch (QCallerException $objExc) {
                     $objExc->IncrementOffset();
                     throw $objExc;

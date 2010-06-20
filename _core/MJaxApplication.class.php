@@ -49,5 +49,19 @@ abstract class MJaxApplication{
         $strProperties .= "}\n";
         return $strProperties;
     }
+    public static function HasParent($mixClass, $mixParent){
+        if(!is_string($mixParent)){
+            $strParentName = get_class($mixParent);
+        }else{
+            $strParentName = $mixParent;
+        }
+        $arrParents = class_parents($mixClass, true);
+        foreach($arrParents as $strParentNameTest){
+            if($strParentName == $strParentNameTest){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 ?>

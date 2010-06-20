@@ -7,10 +7,12 @@ class MJaxCssClass extends QBaseClass{
     protected $objStyle = null;
     protected $arrPlugins = array();
     protected $arrEvents = array();
+    protected $blnModified = false;
     public function  __construct($strClassName) {
         $this->strClassName = $strClassName;
         $this->objStyle = new MJaxControlStyle();
         //Automatically register with MJaxApplication
+        $this->blnModified = true;
         MJaxApplication::RegisterCssClass($this);
     }
     public function AddAction($objEvent, $objAction){
@@ -32,6 +34,13 @@ class MJaxCssClass extends QBaseClass{
         foreach($this->arrPlugins as $objPlugin){
             $strDocumentReady .= $objPlugin->Render(false);
         }
+        if($this->blnModified && $blnAjaxFormating){
+            //add any style changes
+            $strRendered = "$('." . $this->strClassName . "').css(\n";
+            $strRendered .= $this->objStyle->__toJason(true);
+            $strRendered .= ");\n";
+            $strDocumentReady .= $strRendered;
+        }
         $strRendered = '';
         if(strlen($strDocumentReady) > 0){
             
@@ -46,10 +55,13 @@ class MJaxCssClass extends QBaseClass{
         return $strRendered;
 
     }
-    public function RenderCss($blnPrint = true){
+    public function RenderCss($blnPrint = true, $blnAjaxFormating = false){
+        
         $strRendered = "." . $this->strClassName . "{\n";
         $strRendered .= $this->objStyle->__toCss(true);
         $strRendered .= "}\n";
+        
+        $this->blnModified = false;
         if($blnPrint){
             _p($strRendered, false);
         }else{
@@ -64,6 +76,7 @@ class MJaxCssClass extends QBaseClass{
         switch ($strName) {
             case "ClassName": return $this->strClassName;
             case "Style": return $this->objStyle;
+            case "Modified": return $this->blnModified;
             default:
                 try {
                     return parent::__get($strName);

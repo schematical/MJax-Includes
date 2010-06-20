@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 class MJaxEventBase extends QBaseClass{
+    protected $blnRendered = false;
     protected $blnOnce = false;
     protected $objControl = null;
     protected $objCssClass = null;
@@ -42,10 +43,12 @@ class MJaxEventBase extends QBaseClass{
     public function __get($strName) {
         switch ($strName) {
             case "Once": return $this->blnOnce;
+            case "Rendered": return $this->blnRendered;
             case "Selector": return $this->strSelector;
             case "EventName": return $this->strEventName;
             case "Action": return $this->objAction;
             case "KeyCode": return $this->strKeyCode;
+            case "Control": return $this->objControl;
             default:
                 try {
                     return parent::__get($strName);
@@ -68,6 +71,13 @@ class MJaxEventBase extends QBaseClass{
                     $objExc->IncrementOffset();
                     throw $objExc;
                 }
+            case "Rendered":
+                try {
+                    return ($this->blnRendered = QType::Cast($mixValue, QType::Boolean));
+                } catch (QCallerException $objExc) {
+                    $objExc->IncrementOffset();
+                    throw $objExc;
+                }
             case "KeyCode":
                 try {
                     return ($this->strKeyCode = $mixValue);
@@ -86,6 +96,7 @@ class MJaxEventBase extends QBaseClass{
     }
      public function Render(){
         $strRendered = sprintf("$('%s').live('%s', %s);", $this->strSelector, $this->strEventName, $this->objAction->Render());
+        $this->blnRendered = true;
         return $strRendered;
     }
     public function RenderUnbind(){
@@ -170,5 +181,4 @@ class MJaxToggleEvent extends MJaxEventBase{
 class MJaxTriggerEvent extends MJaxEventBase{
     protected $strEventName = 'trigger';
 }
-
 ?>

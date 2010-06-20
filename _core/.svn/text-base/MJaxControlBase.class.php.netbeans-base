@@ -110,6 +110,9 @@ class MJaxControlBase extends QBaseClass{
 
     }
     public function ParsePostData(){ }
+    /*-----Events -----*/
+    public function Create_Controls(){ }
+    /*-----Events End------*/
     public function AddCssClass($mixCssClass){
         if($mixCssClass instanceof MJaxCssClass){
             $this->blnModified = true;
